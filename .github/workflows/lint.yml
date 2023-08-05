@@ -1,0 +1,15 @@
+name: Lint
+on: [pull_request]
+jobs:
+  lint:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
+        with:
+          node-version: 20
+      - run: pnpm install
+      - run: eslint src --ext .ts,.js,.jsx,.tsx --format github
+        env:
+          ESLINT_APP_ID: ${{ secrets.ESLINT_APP_ID }}
+          ESLINT_PRIVATE_KEY_BASE64: ${{ secrets.ESLINT_PRIVATE_KEY_BASE64 }}
